@@ -405,9 +405,9 @@ fig = px.line(
 fig.update_layout(hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
-# =========================
+# =================================
 # TOP IMPORTER & SUPPLIER
-# =========================
+# =================================
 col1, col2 = st.columns(2)
 
 with col1:
@@ -451,6 +451,51 @@ with col2:
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig, use_container_width=True)
+
+# =================================
+# TOP 10 WEAPON AVIONIK
+# =================================
+st.subheader("💥 Top 10 Jenis Senjata Avionik")
+
+top_weapons = (
+    df_trade_avionics["weapon_description"]
+    .value_counts()
+    .head(10)
+    .reset_index()
+)
+top_weapons.columns = ["weapon_description", "transactions"]
+
+# Seaborn plot
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=top_weapons,
+    x="transactions",
+    y="weapon_description",
+    palette="viridis"
+)
+plt.title("Jenis Senjata Avionik Paling Banyak Diperdagangkan")
+plt.xlabel("Jumlah Transaksi")
+plt.ylabel("Jenis Avionik")
+st.pyplot(plt.gcf())  # tampilkan di Streamlit
+plt.clf()  # clear figure agar plot selanjutnya tidak bercampur
+
+# =================================
+# 10 WEAPON TERMUDA
+# =================================
+st.subheader("⏱ Jenis Avionik dengan Usia Operasional Termuda")
+
+plt.figure(figsize=(8,5))
+sns.barplot(
+    data=age_by_weapon.head(10),
+    x="weapon_age",
+    y="weapon_description",
+    palette="magma"
+)
+plt.title("Jenis Avionik dengan Usia Operasional Termuda")
+plt.xlabel("Rata-rata Usia (Tahun)")
+plt.ylabel("Jenis Avionik")
+st.pyplot(plt.gcf())  # tampilkan di Streamlit
+plt.clf()
 
 # =========================
 # ORDER VS DELIVERY
@@ -538,3 +583,4 @@ st.caption(
     "Insight: Negara dengan rata-rata usia avionik tinggi "
     "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
 )
+

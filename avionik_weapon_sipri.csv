@@ -1,0 +1,212 @@
+weapon_description;avionik
+transport helicopter;TRUE
+towed gun;FALSE
+armoured personnel carrier;FALSE
+tank;FALSE
+multiple rocket launcher;FALSE
+guided bomb;FALSE
+light helicopter;TRUE
+light transport aircraft;TRUE
+anti-radar missile/asm;FALSE
+transport aircraft;TRUE
+uav;TRUE
+combat helicopter;TRUE
+surface-to-surface missile launcher;FALSE
+light tank;FALSE
+short-range air-to-air missile;FALSE
+light aircraft;TRUE
+sam;FALSE
+anti-tank missile;FALSE
+aircraft engine;FALSE
+trainer/combat aircraft;TRUE
+fighter aircraft;TRUE
+(armed) trainer aircraft;TRUE
+fga aircraft;TRUE
+helicopter;TRUE
+bomber aircraft;TRUE
+trainer aircraft;TRUE
+sam system;FALSE
+infantry fighting vehicle;FALSE
+self-propelled anti-aircraft gun;FALSE
+reconnaissance aircraft;TRUE
+air-search radar;TRUE
+height-finding radar;TRUE
+self-propelled gun;FALSE
+mobile sam system;FALSE
+armoured reconnaissance vehicle;FALSE
+portable sam;FALSE
+surface-to-surface missile;FALSE
+turbofan;FALSE
+torpedo boat;FALSE
+submarine;FALSE
+minesweeper;FALSE
+patrol boat;FALSE
+anti-aircraft gun;FALSE
+fire-control radar;TRUE
+anti-ship missile;FALSE
+coastal defence system;FALSE
+mortar;FALSE
+tanker;FALSE
+cargo ship;FALSE
+support ship;FALSE
+armed uav;TRUE
+anti-ship/land-attack missile;FALSE
+infantry fighting vehicle turret;FALSE
+frigate;FALSE
+mcm ship;FALSE
+self-propelled mortar;FALSE
+replenishment ship;FALSE
+artillery locating radar;FALSE
+ship engine;FALSE
+self-propelled air-defence system;FALSE
+long-range air-to-air missile;FALSE
+anti-submarine sonar;FALSE
+air-to-surface missile;FALSE
+air-search system;TRUE
+anti-ship torpedo;FALSE
+naval gun;FALSE
+anti-submarine torpedo;FALSE
+air/sea-search radar;TRUE
+anti-submarine helicopter;TRUE
+gas turbine;FALSE
+anti-ship/anti-submarine torpedo;FALSE
+anti-tank/air-to-surface missile;FALSE
+sea-search radar;FALSE
+landing ship;FALSE
+missile boat;FALSE
+tank destroyer;FALSE
+armoured car;FALSE
+corvette;FALSE
+heavy transport aircraft;TRUE
+maritime patrol aircraft;TRUE
+ground surveillance aircraft;TRUE
+armoured supply vehicle;FALSE
+fire-support vehicle;FALSE
+tanker/transport aircraft;TRUE
+training ship;FALSE
+amphibious assault ship;FALSE
+ground-surveillance radar;FALSE
+armoured recovery vehicle;FALSE
+light /trainer aircraft;TRUE
+ground-attack aircraft;TRUE
+maritime patrol aircraft radar;TRUE
+naval sam system;FALSE
+landing craft;FALSE
+vehicle engine;FALSE
+air-search/fire-control radar;TRUE
+patrol ship;FALSE
+destroyer;FALSE
+turbojet;FALSE
+anti-submarine aircraft;TRUE
+long-range air-to-air missile/sam;FALSE
+tug;FALSE
+air-to-surface/anti-ship missile;FALSE
+self-propelled gun turret;FALSE
+aircraft carrier;FALSE
+cruiser;FALSE
+ground surveillance radar;FALSE
+tank turret;FALSE
+signals intelligence system;TRUE
+armoured bridgelayer;FALSE
+guided glide bomb;FALSE
+anti-radar missile;FALSE
+signals intelligence aircraft;TRUE
+submarine sonar;FALSE
+fga/electronic warfare aircraft;TRUE
+aircraft reconnaissance system;TRUE
+aircraft electro-optical system;TRUE
+guided rocket;FALSE
+air refuel system;TRUE
+replenishment tanker;FALSE
+airborne early-warning aircraft;TRUE
+guided shell;FALSE
+nuclear submarine;FALSE
+combat aircraft radar;TRUE
+anti-submarine mortar;FALSE
+armoured engineer vehicle;FALSE
+combat helicopter radar;TRUE
+sam/abm;FALSE
+air-defence system;FALSE
+mortar turret;FALSE
+loitering munition;FALSE
+surveillance satellite;FALSE
+air-to-surface/surface-to-surface missile;FALSE
+helicopter turret;FALSE
+abm missile;FALSE
+multi-function radar;TRUE
+guided rocket/air-to-surface missile;FALSE
+light/trainer aircraft;TRUE
+electro-optical system;TRUE
+one-way attack drone;TRUE
+anti-submarine rocket launcher;FALSE
+turboprop;FALSE
+transport ship;FALSE
+patrol ship/tug;FALSE
+tank chassis;FALSE
+anti-submarine missile;FALSE
+airborne early-warning radar;TRUE
+anti-ship helicopter;TRUE
+minehunter;FALSE
+armoured engineer/recovery vehicle;FALSE
+tank destroyer turret;FALSE
+land-attack missile;FALSE
+icebreaker;FALSE
+frigate/landing ship;FALSE
+minelayer;FALSE
+naval mine/torpedo;FALSE
+anti-ship/anti-radar missile;FALSE
+airborne early-warning helicopter;TRUE
+armoured personnel carrier turret;FALSE
+airborne early-warning/ground surveillance aircraft;TRUE
+anti-aircraft gun turret;FALSE
+anti-submarine/ship torpedo;FALSE
+target tow aircraft;TRUE
+signals intelligence ship;FALSE
+signals intelligence helicopter;TRUE
+salvage ship;FALSE
+naval multiple rocket launcher;FALSE
+patrol ship/transport ship;FALSE
+anti-aircraft gun/sam system;FALSE
+patrol ship/support ship;FALSE
+abm system;FALSE
+gunboat;FALSE
+torpedo boat;FALSE
+anti-aircraft gun system;FALSE
+patrol boat/transport craft;FALSE
+maritime patrol uav;TRUE
+anti-ship/surface-to-surface missile;FALSE
+(armed) uav;TRUE
+reconnaissance/signals intelligence system;TRUE
+signals intelligence/ground surveillance aircraft aircraft;TRUE
+electro-optical fire-control system;TRUE
+transport craft;FALSE
+support/landing ship;FALSE
+corvette/minesweeper;FALSE
+self-propelled ad system;FALSE
+landing craft/patrol boat;FALSE
+sam system radar;TRUE
+support craft;FALSE
+reconnaissance/signals intelligence aircraft;TRUE
+helicopter/transport aircraft;TRUE
+survey ship;FALSE
+cargo craft;FALSE
+patrol ship/training ship;FALSE
+light aircraft/uav;TRUE
+patrol ship/frigate;FALSE
+coastal defence gun;FALSE
+midget submarine;FALSE
+self-propelled gun chassis;FALSE
+anti-ship missile/asm/sam;FALSE
+training tank;FALSE
+amphibious assault ship/frigate;FALSE
+transport/trainer aircraft;TRUE
+abm/sam system;FALSE
+infantry fighting vehicle turret;FALSE
+aircraft eo/radar system;TRUE
+sonar;FALSE
+light transport airship;TRUE
+armed ugv;FALSE
+multi-role radar;TRUE
+patrol ship/icebreaker;FALSE
+submarine-launched ballistic missile;FALSE
+ship nuclear reactor;FALSE

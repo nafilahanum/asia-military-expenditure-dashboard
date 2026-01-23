@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
+import plotly.graph_objects as go
+
 
 # =========================
 # PAGE CONFIG
@@ -201,3 +204,337 @@ st.plotly_chart(fig_heatmap, use_container_width=True)
 # =========================
 st.subheader("📋 Data Detail (Filtered)")
 st.dataframe(df_filtered, use_container_width=True)
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+
+# =========================
+# PAGE CONFIG
+# =========================
+st.set_page_config(
+    page_title="Avionics Trade Analysis (SIPRI)",
+    layout="wide"
+)
+
+st.title("✈️ Analisis Perdagangan Senjata Avionik Global (SIPRI)")
+st.caption("Data-driven insight untuk identifikasi tren, supplier, importir, dan potensi market modernisasi")
+
+# =========================
+# LOAD DATA
+# =========================
+@st.cache_data
+def load_data():
+    df_trade = pd.read_csv(
+        "trade-register-edited.csv",
+        encoding="latin1",
+        sep=None,
+        engine="python"
+    )
+
+    # Normalisasi kolom
+    df_trade.columns = (
+        df_trade.columns.str.lower()
+        .str.strip()
+        .str.replace(" ", "_")
+        .str.replace(r"[^\w]", "", regex=True)
+    )
+
+    df_trade.replace(["?", "-", "n/a", "N/A", ""], np.nan, inplace=True)
+
+    numeric_cols = [
+        "year_of_order",
+        "number_ordered",
+        "number_delivered",
+        "years_of_delivery",
+        "sipri_tiv_per_unit",
+        "sipri_tiv_for_total_order",
+        "sipri_tiv_of_delivered_weapons"
+    ]
+
+    df_trade[numeric_cols] = df_trade[numeric_cols].apply(
+        lambda x: pd.to_numeric(x, errors="coerce")
+    )
+
+    df_trade["year_of_order"] = df_trade["year_of_order"].round().astype("Int64")
+
+    for col in numeric_cols:
+        df_trade.loc[df_trade[col] < 0, col] = np.nan
+
+    df_trade = df_trade.drop_duplicates()
+
+    # Load avionics reference
+    df_av_ref = pd.read_csv("avionik_weapon_sipri.csv", sep=";")
+
+    avionics_whitelist = set(
+        df_av_ref[df_av_ref["avionik"] == True]["weapon_description"]
+        .str.strip()
+        .str.lower()
+    )
+
+    df_trade["weapon_desc_norm"] = (
+        df_trade["weapon_description"]
+        .str.strip()
+        .str.lower()
+    )
+
+    df_av = df_trade[
+        df_trade["weapon_desc_norm"].isin(avionics_whitelist)
+    ].copy()
+
+    df_av.drop(columns=["weapon_desc_norm"], inplace=True)
+
+    # Cleaning lanjutan
+    num_cols = [
+        "number_ordered",
+        "number_delivered",
+        "sipri_tiv_per_unit",
+        "sipri_tiv_for_total_order",
+        "sipri_tiv_of_delivered_weapons"
+    ]
+
+    df_av[num_cols] = df_av[num_cols].fillna(0)
+
+    text_cols = [
+        "recipient", "supplier", "weapon_designation",
+        "weapon_description", "status"
+    ]
+
+    for col in text_cols:
+        df_av[col] = (
+            df_av[col].fillna("unknown")
+            .str.lower()
+            .str.strip()
+        )
+
+    df_av["comments"] = df_av["comments"].fillna("-")
+
+    df_av["delivery_gap"] = df_av["number_ordered"] - df_av["number_delivered"]
+    df_av["delivery_status"] = df_av["delivery_gap"].apply(
+        lambda x: "completed" if x == 0 else "partial"
+    )
+
+    # Hitung usia alat
+    CURRENT_YEAR = 2026
+    df_av["years_of_delivery"] = pd.to_numeric(
+        df_av["years_of_delivery"], errors="coerce"
+    )
+
+    df_av["weapon_age"] = CURRENT_YEAR - df_av["years_of_delivery"]
+
+    df_av = df_av[
+        (df_av["weapon_age"] >= 0) &
+        (df_av["weapon_age"] <= 60)
+    ]
+
+    return df_av
+
+
+df = load_data()
+
+# =========================
+# SIDEBAR FILTER
+# =========================
+st.sidebar.header("🔍 Filter Data")
+
+year_range = st.sidebar.slider(
+    "Tahun Pemesanan",
+    int(df["year_of_order"].min()),
+    int(df["year_of_order"].max()),
+    (
+        int(df["year_of_order"].min()),
+        int(df["year_of_order"].max())
+    )
+)
+
+selected_recipient = st.sidebar.multiselect(
+    "Negara Penerima",
+    sorted(df["recipient"].unique())
+)
+
+filtered_df = df[
+    (df["year_of_order"] >= year_range[0]) &
+    (df["year_of_order"] <= year_range[1])
+]
+
+if selected_recipient:
+    filtered_df = filtered_df[
+        filtered_df["recipient"].isin(selected_recipient)
+    ]
+
+# =========================
+# METRICS
+# =========================
+st.subheader("📌 Ringkasan Utama")
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Transaksi", f"{filtered_df.shape[0]:,}")
+col2.metric("Total Importir", filtered_df["recipient"].nunique())
+col3.metric("Total Supplier", filtered_df["supplier"].nunique())
+col4.metric(
+    "Total SIPRI TIV",
+    f"{filtered_df['sipri_tiv_of_delivered_weapons'].sum():,.0f}"
+)
+
+# =========================
+# TREND TRANSAKSI
+# =========================
+st.subheader("📈 Tren Perdagangan Avionik")
+
+yearly_trades = (
+    filtered_df
+    .groupby("year_of_order")
+    .size()
+    .reset_index(name="transactions")
+)
+
+fig = px.line(
+    yearly_trades,
+    x="year_of_order",
+    y="transactions",
+    markers=True,
+    title="Trend Transaksi Avionik",
+    labels={
+        "year_of_order": "Tahun Pemesanan",
+        "transactions": "Jumlah Transaksi"
+    }
+)
+fig.update_layout(hovermode="x unified")
+st.plotly_chart(fig, use_container_width=True)
+
+# =========================
+# TOP IMPORTER & SUPPLIER
+# =========================
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("🌍 Top 10 Importir Avionik")
+    top_importers = (
+        filtered_df["recipient"]
+        .value_counts()
+        .head(10)
+        .reset_index()
+    )
+    top_importers.columns = ["recipient", "transactions"]
+
+    fig = px.bar(
+        top_importers,
+        x="transactions",
+        y="recipient",
+        orientation="h",
+        title="Top 10 Importir Avionik",
+        labels={"transactions": "Jumlah Transaksi", "recipient": "Negara"}
+    )
+    fig.update_layout(yaxis=dict(categoryorder="total ascending"))
+    st.plotly_chart(fig, use_container_width=True)
+
+with col2:
+    st.subheader("🏭 Top 10 Supplier Avionik")
+    top_suppliers = (
+        filtered_df["supplier"]
+        .value_counts()
+        .head(10)
+        .reset_index()
+    )
+    top_suppliers.columns = ["supplier", "transactions"]
+
+    fig = px.bar(
+        top_suppliers,
+        x="transactions",
+        y="supplier",
+        orientation="h",
+        title="Top 10 Supplier Avionik",
+        labels={"transactions": "Jumlah Transaksi", "supplier": "Supplier"}
+    )
+    fig.update_layout(yaxis=dict(categoryorder="total ascending"))
+    st.plotly_chart(fig, use_container_width=True)
+
+# =========================
+# ORDER VS DELIVERY
+# =========================
+st.subheader("📦 Konsistensi Order vs Pengiriman")
+
+fig = px.scatter(
+    filtered_df,
+    x="number_ordered",
+    y="number_delivered",
+    color="delivery_status",
+    hover_data=[
+        "recipient",
+        "supplier",
+        "weapon_description",
+        "year_of_order"
+    ],
+    labels={
+        "number_ordered": "Jumlah Dipesan",
+        "number_delivered": "Jumlah Dikirim"
+    }
+)
+
+max_val = filtered_df["number_ordered"].max()
+fig.add_shape(
+    type="line",
+    x0=0, y0=0,
+    x1=max_val, y1=max_val,
+    line=dict(dash="dash")
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+# =========================
+# USIA AVIONIK
+# =========================
+st.subheader("🕰️ Analisis Usia Operasional Avionik")
+
+fig = px.histogram(
+    filtered_df,
+    x="weapon_age",
+    nbins=20,
+    marginal="box",
+    labels={"weapon_age": "Usia Alat (Tahun)"}
+)
+st.plotly_chart(fig, use_container_width=True)
+
+# =========================
+# MODERNIZATION MARKET
+# =========================
+st.subheader("🚀 Identifikasi Market Modernisasi")
+
+age_by_country = (
+    filtered_df
+    .groupby("recipient")["weapon_age"]
+    .mean()
+    .sort_values()
+    .reset_index()
+)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("**Avionik Termuda (Modern Fleet)**")
+    fig = px.bar(
+        age_by_country.head(10),
+        x="weapon_age",
+        y="recipient",
+        orientation="h"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+with col2:
+    st.markdown("**Avionik Tertua (Upgrade Market)**")
+    fig = px.bar(
+        age_by_country.tail(10),
+        x="weapon_age",
+        y="recipient",
+        orientation="h"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("---")
+st.caption(
+    "Insight: Negara dengan rata-rata usia avionik tinggi "
+    "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
+)

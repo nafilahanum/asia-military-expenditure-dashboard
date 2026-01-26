@@ -629,8 +629,11 @@ with col1:
         title="Avionik Termuda (Modern Fleet)",
         height=600
     )
-    fig1.update_layout(yaxis=dict(categoryorder="total ascending"))
+    fig1.update_layout(
+        yaxis=dict(categoryorder="total descending")
+    )
     st.plotly_chart(fig1, use_container_width=True)
+
 
 with col2:
     fig2 = px.bar(
@@ -654,6 +657,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

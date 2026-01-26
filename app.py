@@ -418,7 +418,6 @@ fig = px.line(
 )
 fig.update_layout(template="plotly_white", hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
-st.plotly_chart(fig_tiv_avionik, use_container_width=True)
 st.caption(
     "Total nilai SIPRI TIV avionik per tahun menggambarkan dinamika volume transfer dan akuisisi sistem avionik "
     "di tingkat global/regional. Tren yang meningkat secara konsisten mencerminkan permintaan berkelanjutan "
@@ -505,7 +504,6 @@ fig = px.bar(
 )
 fig.update_layout(yaxis=dict(categoryorder="total ascending"))
 st.plotly_chart(fig, use_container_width=True)
-st.plotly_chart(fig_all_avionik, use_container_width=True)
 st.caption(
     "Distribusi semua jenis senjata avionik menunjukkan struktur permintaan pasar berdasarkan kategori sistem. "
     "Dominasi kategori tertentu mengindikasikan peluang pemasaran yang lebih kuat, "
@@ -537,7 +535,6 @@ fig = px.bar(
 )
 fig.update_layout(yaxis=dict(categoryorder="total ascending"))
 st.plotly_chart(fig, use_container_width=True)
-st.plotly_chart(fig_avionik_age, use_container_width=True)
 st.caption(
     "Visualisasi jenis avionik berdasarkan usia operasional menunjukkan distribusi siklus hidup sistem yang masih aktif digunakan. "
     "Avionik dengan usia operasional tinggi mengindikasikan potensi kebutuhan upgrade, retrofit, atau penggantian sistem, "
@@ -657,6 +654,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

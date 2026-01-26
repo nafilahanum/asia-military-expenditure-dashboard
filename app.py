@@ -99,6 +99,11 @@ fig_exp = px.line(
 
 fig_exp.update_layout(height=500)
 st.plotly_chart(fig_exp, use_container_width=True)
+st.caption('''Visualisasi ini dibaca dengan menekankan pola pertumbuhan jangka panjang belanja militer tiap negara. 
+Garis yang meningkat secara stabil dari waktu ke waktu menunjukkan adanya komitmen modernisasi pertahanan yang berkelanjutan dan terencana. 
+Bagi pemasaran produk avionik, pola ini merupakan sinyal positif karena avionik membutuhkan siklus pengadaan, sertifikasi, dan pemeliharaan jangka panjang. 
+Sebaliknya, lonjakan belanja yang terjadi secara tiba-tiba cenderung mencerminkan kebutuhan reaktif atau proyek satu kali, 
+sehingga kurang ideal sebagai target pasar strategis jangka panjang.''')
 
 # =========================
 # 2️⃣ LINE — YoY GROWTH
@@ -115,6 +120,11 @@ fig_yoy = px.line(
 
 fig_yoy.update_layout(height=500)
 st.plotly_chart(fig_yoy, use_container_width=True)
+st.caption('''Visualisasi pertumbuhan tahunan (Year-on-Year) dibaca untuk menilai stabilitas dan kematangan proses pengadaan pertahanan. 
+Tingkat pertumbuhan yang moderat dan konsisten mencerminkan perencanaan anggaran yang sehat dan dapat diprediksi, 
+kondisi yang mendukung pemasaran produk avionik yang berbasis kontrak jangka panjang dan layanan purna jual. 
+Sebaliknya, fluktuasi YoY yang ekstrem menunjukkan pola belanja yang sangat dipengaruhi oleh faktor situasional, 
+sehingga meningkatkan risiko ketidakpastian permintaan di masa depan.''')
 
 # =========================
 # 3️⃣ SCATTER — BUDGET vs GROWTH
@@ -147,7 +157,11 @@ fig_scatter.update_traces(
 
 fig_scatter.update_layout(height=600)
 st.plotly_chart(fig_scatter, use_container_width=True)
-
+st.caption('''Visualisasi pertumbuhan tahunan dibaca untuk menilai stabilitas dinamika belanja pertahanan. 
+Pertumbuhan YoY yang moderat dan konsisten menunjukkan sistem pengadaan yang relatif matang dan dapat diprediksi. 
+Kondisi ini mendukung strategi pemasaran avionik yang berorientasi pada keberlanjutan dan repeat business. 
+Sebaliknya, fluktuasi YoY yang ekstrem mengindikasikan ketergantungan pada faktor situasional seperti konflik atau perubahan kebijakan mendadak, 
+yang meningkatkan risiko ketidakpastian pasar.''')
 
 # =========================
 # 4️⃣ RANKING — TOTAL SCORE
@@ -177,6 +191,11 @@ fig_rank.update_layout(
 )
 
 st.plotly_chart(fig_rank, use_container_width=True)
+st.plotly_chart(fig_ranking_asia, use_container_width=True)
+st.caption(
+    "Peringkat Total Score digunakan sebagai alat screening pasar untuk menentukan prioritas negara Asia "
+    "yang memiliki kombinasi kapasitas belanja, pertumbuhan, dan stabilitas yang relevan bagi strategi masuk pasar avionik."
+)
 
 # =========================
 # 5️⃣ HEATMAP — SCORE per TAHUN
@@ -198,6 +217,12 @@ fig_heatmap = px.imshow(
 
 fig_heatmap.update_layout(height=700)
 st.plotly_chart(fig_heatmap, use_container_width=True)
+st.plotly_chart(fig_heatmap_score, use_container_width=True)
+st.caption(
+    "Heatmap Total Score menunjukkan negara-negara Asia dengan performa belanja militer yang konsisten antarwaktu. "
+    "Pola warna yang berkelanjutan lebih relevan bagi masuknya produk avionik dibandingkan lonjakan skor sesaat, "
+    "karena mencerminkan stabilitas pasar dan potensi kontrak berulang."
+)
 
 # =========================
 # DATA TABLE
@@ -407,6 +432,12 @@ fig = px.line(
 )
 fig.update_layout(template="plotly_white", hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig_tiv_avionik, use_container_width=True)
+st.caption(
+    "Total nilai SIPRI TIV avionik per tahun menggambarkan dinamika volume transfer dan akuisisi sistem avionik "
+    "di tingkat global/regional. Tren yang meningkat secara konsisten mencerminkan permintaan berkelanjutan "
+    "terhadap teknologi avionik, serta peluang pasar yang relevan bagi strategi masuk dan ekspansi produk."
+)
 
 
 # =========================
@@ -454,7 +485,8 @@ with col2:
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig, use_container_width=True)
 
-st.caption('''Bar chart top 10 importir (negara) menunjukkan negara mana yang paling banyak membeli avionik.
+st.caption('''Bar chart top importir (negara) menunjukkan negara mana yang paling banyak membeli avionik.
+
 Bar chart top supplier menunjukkan kompetitor utama.
 
 Insight:
@@ -487,6 +519,13 @@ fig = px.bar(
 )
 fig.update_layout(yaxis=dict(categoryorder="total ascending"))
 st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig_all_avionik, use_container_width=True)
+st.caption(
+    "Distribusi semua jenis senjata avionik menunjukkan struktur permintaan pasar berdasarkan kategori sistem. "
+    "Dominasi kategori tertentu mengindikasikan peluang pemasaran yang lebih kuat, "
+    "khususnya untuk strategi diferensiasi produk dan fokus portofolio avionik."
+)
+
 
 # =========================
 # USIA PER JENIS AVIONIK
@@ -512,6 +551,12 @@ fig = px.bar(
 )
 fig.update_layout(yaxis=dict(categoryorder="total ascending"))
 st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig_avionik_age, use_container_width=True)
+st.caption(
+    "Visualisasi jenis avionik berdasarkan usia operasional menunjukkan distribusi siklus hidup sistem yang masih aktif digunakan. "
+    "Avionik dengan usia operasional tinggi mengindikasikan potensi kebutuhan upgrade, retrofit, atau penggantian sistem, "
+    "yang relevan bagi strategi pemasaran avionik berbasis modernisasi dan sustainment."
+)
 
 # =========================
 # ORDER VS DELIVERY
@@ -626,6 +671,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

@@ -415,9 +415,10 @@ st.plotly_chart(fig, use_container_width=True)
 # =========================
 # TREND NILAI SIPRI TIV INTERAKTIF
 # =========================
+import plotly.express as px
+
 st.subheader("Total Nilai SIPRI TIV Avionik per Tahun (Interaktif)")
 
-# Hitung total TIV per tahun dari filtered_df
 tiv_yearly = (
     filtered_df
     .groupby("year_of_order")["sipri_tiv_of_delivered_weapons"]
@@ -425,7 +426,6 @@ tiv_yearly = (
     .reset_index()
 )
 
-# Plot interaktif dengan Plotly Express
 fig = px.line(
     tiv_yearly,
     x="year_of_order",
@@ -438,16 +438,8 @@ fig = px.line(
     }
 )
 
-# Tambahkan grid dan tema ringan
-fig.update_layout(
-    xaxis=dict(showgrid=True),
-    yaxis=dict(showgrid=True),
-    template="plotly_white"
-)
-
-# Tampilkan di Streamlit
+fig.update_layout(template="plotly_white")
 st.plotly_chart(fig, use_container_width=True)
-# clear figure agar plot selanjutnya tidak bercampur
 
 # =========================
 # TOP IMPORTER & SUPPLIER

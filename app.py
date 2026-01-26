@@ -72,23 +72,42 @@ st.divider()
 # =========================
 st.subheader("📈 Tren Belanja Militer (USD)")
 
+# 🔑 Ambil tahun terbaru
+latest_year = df_filtered["Year"].max()
+
+# 🔑 Hitung nilai belanja terbaru per negara
+legend_order = (
+    df_filtered[df_filtered["Year"] == latest_year]
+    .sort_values("Military_Expenditure_USD", ascending=False)
+    ["Country_clean"]
+    .tolist()
+)
+
+# 🔑 Plot dengan category_orders
 fig_exp = px.line(
     df_filtered,
     x="Year",
     y="Military_Expenditure_USD",
     color="Country_clean",
     markers=True,
-    labels={"Military_Expenditure_USD": "USD"}
+    labels={"Military_Expenditure_USD": "USD"},
+    category_orders={"Country_clean": legend_order}
 )
 
-fig_exp.update_layout(height=500)
+fig_exp.update_layout(
+    height=500,
+    legend_title_text="Negara (Belanja Terbesar → Terkecil)"
+)
+
 st.plotly_chart(fig_exp, use_container_width=True)
 
 st.caption(
-    "Pola pertumbuhan belanja militer yang stabil mencerminkan komitmen modernisasi pertahanan jangka panjang. "
-    "Bagi pemasaran produk avionik, tren seperti ini lebih bernilai dibanding lonjakan belanja sesaat "
-    "karena avionik membutuhkan siklus pengadaan dan pemeliharaan berkelanjutan."
+    "Urutan legenda merepresentasikan besarnya belanja militer terbaru, sehingga pengguna dapat "
+    "langsung mengidentifikasi negara dengan kapasitas pengadaan terbesar. "
+    "Pendekatan ini memperkuat analisis potensi pasar avionik dengan menonjolkan aktor utama "
+    "tanpa bergantung pada urutan alfabet."
 )
+
 
 # =========================
 # 2️⃣ LINE — YoY GROWTH
@@ -657,6 +676,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

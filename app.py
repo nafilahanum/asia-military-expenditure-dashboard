@@ -585,7 +585,6 @@ age_by_country = (
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("**Avionik Termuda (Modern Fleet)**")
     fig1 = px.bar(
         age_by_country.sort_values("weapon_age", ascending=True),
         x="weapon_age",
@@ -598,7 +597,6 @@ with col1:
     st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
-    st.markdown("**Avionik Tertua (Upgrade Market)**")
     fig2 = px.bar(
         age_by_country.sort_values("weapon_age", ascending=False),
         x="weapon_age",
@@ -609,6 +607,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

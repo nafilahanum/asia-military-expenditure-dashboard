@@ -99,7 +99,7 @@ fig_exp = px.line(
 
 fig_exp.update_layout(height=500)
 st.plotly_chart(fig_exp, use_container_width=True)
-st.caption('''Visualisasi ini dibaca dengan menekankan pola pertumbuhan jangka panjang belanja militer tiap negara. 
+st.caption('''Visualisasi ini menekankan pola pertumbuhan jangka panjang belanja militer tiap negara. 
 Garis yang meningkat secara stabil dari waktu ke waktu menunjukkan adanya komitmen modernisasi pertahanan yang berkelanjutan dan terencana. 
 Bagi pemasaran produk avionik, pola ini merupakan sinyal positif karena avionik membutuhkan siklus pengadaan, sertifikasi, dan pemeliharaan jangka panjang. 
 Sebaliknya, lonjakan belanja yang terjadi secara tiba-tiba cenderung mencerminkan kebutuhan reaktif atau proyek satu kali, 
@@ -120,7 +120,7 @@ fig_yoy = px.line(
 
 fig_yoy.update_layout(height=500)
 st.plotly_chart(fig_yoy, use_container_width=True)
-st.caption('''Visualisasi pertumbuhan tahunan (Year-on-Year) dibaca untuk menilai stabilitas dan kematangan proses pengadaan pertahanan. 
+st.caption('''Visualisasi pertumbuhan tahunan (Year-on-Year) menilai stabilitas dan kematangan proses pengadaan pertahanan. 
 Tingkat pertumbuhan yang moderat dan konsisten mencerminkan perencanaan anggaran yang sehat dan dapat diprediksi, 
 kondisi yang mendukung pemasaran produk avionik yang berbasis kontrak jangka panjang dan layanan purna jual. 
 Sebaliknya, fluktuasi YoY yang ekstrem menunjukkan pola belanja yang sangat dipengaruhi oleh faktor situasional, 
@@ -157,7 +157,7 @@ fig_scatter.update_traces(
 
 fig_scatter.update_layout(height=600)
 st.plotly_chart(fig_scatter, use_container_width=True)
-st.caption('''Visualisasi pertumbuhan tahunan dibaca untuk menilai stabilitas dinamika belanja pertahanan. 
+st.caption('''Visualisasi pertumbuhan tahunan menilai stabilitas dinamika belanja pertahanan. 
 Pertumbuhan YoY yang moderat dan konsisten menunjukkan sistem pengadaan yang relatif matang dan dapat diprediksi. 
 Kondisi ini mendukung strategi pemasaran avionik yang berorientasi pada keberlanjutan dan repeat business. 
 Sebaliknya, fluktuasi YoY yang ekstrem mengindikasikan ketergantungan pada faktor situasional seperti konflik atau perubahan kebijakan mendadak, 
@@ -671,6 +671,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

@@ -484,7 +484,6 @@ with col1:
         x="transactions",
         y="recipient",
         orientation="h",
-        title="Top Importir Avionik",
         labels={"transactions": "Jumlah Transaksi", "recipient": "Negara"}
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
@@ -504,7 +503,6 @@ with col2:
         x="transactions",
         y="supplier",
         orientation="h",
-        title="Top Supplier Avionik",
         labels={"transactions": "Jumlah Transaksi", "supplier": "Supplier"}
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
@@ -741,6 +739,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

@@ -354,6 +354,7 @@ selected_recipient = st.sidebar.multiselect(
     sorted(df["recipient"].unique())
 )
 
+# Filter utama
 filtered_df = df[
     (df["year_of_order"] >= year_range[0]) &
     (df["year_of_order"] <= year_range[1])
@@ -364,26 +365,8 @@ if selected_recipient:
         filtered_df["recipient"].isin(selected_recipient)
     ]
 
-# =========================
-# FILTER UNTUK TOP 10 WEAPONS
-# =========================
-selected_year_top10 = st.selectbox(
-    "Pilih Tahun (Top 10 Senjata)",
-    options=sorted(df["year_of_order"].dropna().unique()),
-    index=len(df["year_of_order"].dropna().unique())-1,
-    key="year_top10"
-)
-
-selected_country_top10 = st.selectbox(
-    "Pilih Negara Penerima (Top 10 Senjata)",
-    options=np.append(["Semua"], sorted(df["recipient"].dropna().unique())),
-    key="country_top10"
-)
-
-# Buat filtered_weapons
-filtered_weapons = df[df["year_of_order"] == selected_year_top10]
-if selected_country_top10 != "Semua":
-    filtered_weapons = filtered_weapons[filtered_weapons["recipient"] == selected_country_top10]
+# Gunakan filtered_df juga untuk Top Weapons
+filtered_weapons = filtered_df.copy()
 
 # =========================
 # METRICS
@@ -605,6 +588,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

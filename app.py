@@ -499,7 +499,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.subheader("💥 Top 10 Jenis Senjata Avionik")
 
 top_weapons = (
-    df_trade_avionics["weapon_description"]
+    filtered_weapons["weapon_description"]
     .value_counts()
     .head(10)
     .reset_index()
@@ -624,6 +624,7 @@ st.caption(
     "Insight: Negara dengan rata-rata usia avionik tinggi "
     "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
 )
+
 
 
 

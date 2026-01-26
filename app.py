@@ -436,7 +436,6 @@ with col1:
     top_importers = (
         filtered_df["recipient"]
         .value_counts()
-        .head(10)
         .reset_index()
     )
     top_importers.columns = ["recipient", "transactions"]
@@ -457,7 +456,6 @@ with col2:
     top_suppliers = (
         filtered_df["supplier"]
         .value_counts()
-        .head(10)
         .reset_index()
     )
     top_suppliers.columns = ["supplier", "transactions"]
@@ -607,6 +605,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

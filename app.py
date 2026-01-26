@@ -110,16 +110,24 @@ st.caption(
 
 
 # =========================
-# 2️⃣ LINE — YoY GROWTH
+# URUTKAN LEGEND BERDASARKAN RATA-RATA YoY
 # =========================
-st.subheader("📊 Growth Rate YoY (%)")
+legend_order = (
+    df_filtered
+    .groupby("Country_clean")["Military_Expenditure_YoY"]
+    .mean()
+    .sort_values(ascending=False)
+    .index
+    .tolist()
+)
 
 fig_yoy = px.line(
     df_filtered,
     x="Year",
     y="Military_Expenditure_YoY",
     color="Country_clean",
-    labels={"Military_Expenditure_YoY": "Growth (%)"}
+    labels={"Military_Expenditure_YoY": "Growth (%)"},
+    category_orders={"Country_clean": legend_order}
 )
 
 fig_yoy.update_layout(height=500)
@@ -128,6 +136,19 @@ st.plotly_chart(fig_yoy, use_container_width=True)
 st.caption(
     "Pertumbuhan YoY yang moderat dan konsisten menunjukkan sistem pengadaan yang matang dan dapat diprediksi. "
     "Sebaliknya, fluktuasi ekstrem menandakan ketergantungan pada faktor situasional yang meningkatkan risiko pasar."
+)
+
+# =========================
+# 🔑 1. Tentukan urutan negara berdasarkan nilai penting
+# (rata-rata Military Expenditure)
+# =========================
+legend_order = (
+    df_filtered
+    .groupby("Country_clean")["Military_Expenditure_USD"]
+    .mean()
+    .sort_values(ascending=False)
+    .index
+    .tolist()
 )
 
 # =========================
@@ -143,6 +164,7 @@ fig_scatter = px.scatter(
     color="Country_clean",
     hover_name="Country_clean",
     log_x=True,
+    category_orders={"Country_clean": legend_order},  # 🔥 KUNCI UTAMA
     labels={
         "Military_Expenditure_USD": "Military Expenditure (USD, log scale)",
         "Military_Expenditure_YoY": "Growth YoY (%)"
@@ -676,6 +698,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

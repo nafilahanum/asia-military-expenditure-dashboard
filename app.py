@@ -455,9 +455,11 @@ with col2:
 
 st.caption('''Bar chart top 10 importir (negara) menunjukkan negara mana yang paling banyak membeli avionik.
 Bar chart top supplier menunjukkan kompetitor utama.
+
 Cara baca:
 1. Negara dengan volume pembelian tinggi tapi usia alat rata-rata tinggi → pasar potensial untuk upgrade/retrofit.
 2. Supplier dominan → perlu strategi differentiation, misal fitur unik atau harga kompetitif.
+
 Strategi: target negara top importir, tetapi perhatikan peluang jika mereka masih menggunakan sistem lama.
 ''')
 
@@ -618,6 +620,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

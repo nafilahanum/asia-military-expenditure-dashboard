@@ -454,7 +454,6 @@ fig = px.line(
     x="year_of_order",
     y="sipri_tiv_of_delivered_weapons",
     markers=True,
-    title="Total Nilai SIPRI TIV Avionik per Tahun",
     labels={"year_of_order": "Tahun", "sipri_tiv_of_delivered_weapons": "Total TIV (USD, konstan)"}
 )
 fig.update_layout(template="plotly_white", hovermode="x unified")
@@ -742,6 +741,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

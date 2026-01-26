@@ -210,6 +210,9 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 # =========================
 # PAGE CONFIG
@@ -410,9 +413,9 @@ fig.update_layout(hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
 # =========================
-# TREND NILAI SIPRI TIV
+# TREND NILAI SIPRI TIV INTERAKTIF
 # =========================
-st.subheader("💰 Total Nilai SIPRI TIV Avionik per Tahun")
+st.subheader("Total Nilai SIPRI TIV Avionik per Tahun (Interaktif)")
 
 # Hitung total TIV per tahun dari filtered_df
 tiv_yearly = (
@@ -422,20 +425,29 @@ tiv_yearly = (
     .reset_index()
 )
 
-# Plot seaborn
-plt.figure(figsize=(10,5))
-sns.lineplot(
-    data=tiv_yearly,
+# Plot interaktif dengan Plotly Express
+fig = px.line(
+    tiv_yearly,
     x="year_of_order",
     y="sipri_tiv_of_delivered_weapons",
-    marker="o"
+    markers=True,
+    title="Total Nilai SIPRI TIV Avionik per Tahun",
+    labels={
+        "year_of_order": "Tahun",
+        "sipri_tiv_of_delivered_weapons": "Total TIV (USD, konstan)"
+    }
 )
-plt.title("Total Nilai SIPRI TIV Avionik per Tahun")
-plt.xlabel("Tahun")
-plt.ylabel("Total TIV (USD, konstan)")
-plt.grid(True)
-st.pyplot(plt.gcf())  # tampilkan di Streamlit
-plt.clf()  # clear figure agar plot selanjutnya tidak bercampur
+
+# Tambahkan grid dan tema ringan
+fig.update_layout(
+    xaxis=dict(showgrid=True),
+    yaxis=dict(showgrid=True),
+    template="plotly_white"
+)
+
+# Tampilkan di Streamlit
+st.plotly_chart(fig, use_container_width=True)
+# clear figure agar plot selanjutnya tidak bercampur
 
 # =========================
 # TOP IMPORTER & SUPPLIER
@@ -616,6 +628,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

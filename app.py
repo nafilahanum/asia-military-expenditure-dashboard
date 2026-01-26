@@ -428,7 +428,7 @@ with col1:
         x="transactions",
         y="recipient",
         orientation="h",
-        title="Top 10 Importir Avionik",
+        title="Top Importir Avionik",
         labels={"transactions": "Jumlah Transaksi", "recipient": "Negara"}
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
@@ -448,7 +448,7 @@ with col2:
         x="transactions",
         y="supplier",
         orientation="h",
-        title="Top 10 Supplier Avionik",
+        title="Top Supplier Avionik",
         labels={"transactions": "Jumlah Transaksi", "supplier": "Supplier"}
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
@@ -588,6 +588,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

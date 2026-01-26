@@ -415,7 +415,7 @@ st.plotly_chart(fig, use_container_width=True)
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("🌍 Top 10 Importir Avionik")
+    st.subheader("🌍 Top Importir Avionik")
     top_importers = (
         filtered_df["recipient"]
         .value_counts()
@@ -435,7 +435,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.subheader("🏭 Top 10 Supplier Avionik")
+    st.subheader("🏭 Top Supplier Avionik")
     top_suppliers = (
         filtered_df["supplier"]
         .value_counts()
@@ -588,6 +588,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

@@ -112,6 +112,7 @@ st.caption(
 # =========================
 # URUTKAN LEGEND BERDASARKAN RATA-RATA YoY
 # =========================
+st.subheader("📈Tren Growth Rate Belanja Militer Negara Asia (YoY)")
 legend_order = (
     df_filtered
     .groupby("Country_clean")["Military_Expenditure_YoY"]
@@ -742,6 +743,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

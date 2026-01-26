@@ -623,6 +623,50 @@ Strategi: masuk ke pasar yang memiliki gap pengiriman, bisa menekankan keandalan
 ''')
 
 # =========================
+# ANALISIS ORDER VS DELIVERY
+# =========================
+table_df = filtered_df.copy()
+
+table_df["delivery_gap"] = (
+    table_df["number_delivered"] - table_df["number_ordered"]
+)
+
+table_df["consistency_flag"] = table_df["delivery_gap"].apply(
+    lambda x: "✅ Konsisten"
+    if x == 0 else
+    ("⚠️ Kurang Kirim" if x < 0 else "📈 Over Delivery")
+)
+
+result_table = table_df[[
+    "recipient",
+    "supplier",
+    "weapon_description",
+    "year_of_order",
+    "number_ordered",
+    "number_delivered",
+    "delivery_gap",
+    "consistency_flag",
+    "delivery_status"
+]].sort_values("delivery_gap")
+
+st.caption(f"""
+🔍 **Ringkasan Cepat**  
+• Total transaksi: **{len(result_table)}**  
+• Konsisten (Order = Delivery): **{(result_table['delivery_gap'] == 0).sum()}**  
+• Kurang kirim: **{(result_table['delivery_gap'] < 0).sum()}**  
+• Over delivery: **{(result_table['delivery_gap'] > 0).sum()}**
+""")
+
+
+st.subheader("📊 Tabel Evaluasi Konsistensi Order vs Pengiriman")
+
+st.dataframe(
+    result_table,
+    use_container_width=True
+)
+
+
+# =========================
 # USIA AVIONIK
 # =========================
 st.subheader("🕰️ Analisis Usia Operasional Avionik")
@@ -698,6 +742,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

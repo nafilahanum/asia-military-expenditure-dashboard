@@ -387,8 +387,8 @@ fig.update_layout(hovermode="x unified", template="plotly_white")
 st.plotly_chart(fig, use_container_width=True)
 st.caption('''Line chart tren transaksi per tahun menunjukkan volume transaksi avionik global.
 Cara baca:
-o	Negara atau periode dengan tren naik menandakan permintaan meningkat → pasar lebih aktif → peluang masuk lebih besar.
-o	Tren turun → kemungkinan pasar jenuh atau ada hambatan regulasi.
+1. Negara atau periode dengan tren naik menandakan permintaan meningkat → pasar lebih aktif → peluang masuk lebih besar.
+2. Tren turun → kemungkinan pasar jenuh atau ada hambatan regulasi.
 Strategi: fokus negara dengan pertumbuhan transaksi positif, terutama jika didukung oleh modernisasi angkatan udara.
 ''')
 # =========================
@@ -452,6 +452,14 @@ with col2:
     )
     fig.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig, use_container_width=True)
+
+st.caption('''Bar chart top 10 importir (negara) menunjukkan negara mana yang paling banyak membeli avionik.
+Bar chart top supplier menunjukkan kompetitor utama.
+Cara baca:
+1. Negara dengan volume pembelian tinggi tapi usia alat rata-rata tinggi → pasar potensial untuk upgrade/retrofit.
+2. Supplier dominan → perlu strategi differentiation, misal fitur unik atau harga kompetitif.
+Strategi: target negara top importir, tetapi perhatikan peluang jika mereka masih menggunakan sistem lama.
+''')
 
 # =========================
 # SEMUA JENIS SENJATA AVIONIK
@@ -534,6 +542,13 @@ fig.add_shape(
 
 st.plotly_chart(fig, use_container_width=True)
 
+st.caption('''Scatter plot order vs delivery menunjukkan konsistensi pemenuhan kontrak.
+Cara baca:
+1. Negara dengan delivery gap besar → peluang untuk menawarkan solusi lebih andal atau layanan after-sales.
+2. Negara dengan delivery = order → pasar stabil, kompetisi tinggi, mungkin butuh diferensiasi.
+Strategi: masuk ke pasar yang memiliki gap pengiriman, bisa menekankan keandalan dan layanan cepat.
+''')
+
 # =========================
 # USIA AVIONIK
 # =========================
@@ -547,6 +562,13 @@ fig = px.histogram(
     labels={"weapon_age": "Usia Alat (Tahun)"}
 )
 st.plotly_chart(fig, use_container_width=True)
+
+st.caption('''Histogram usia alat menunjukkan rata-rata usia sistem avionik di berbagai negara.
+Cara baca:
+1. Usia tinggi → kemungkinan ada kebutuhan modernisasi.
+2. Usia rendah → pasar modern, tetapi bisa menawarkan upgrade teknologi terbaru.
+Strategi: negara dengan usia rata-rata >20 tahun → fokus untuk retrofit & modernisasi.
+''')
 
 # =========================
 # MODERNIZATION MARKET
@@ -587,6 +609,15 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
+st.caption('''Bar chart “Avionik tertua / termuda” per negara.
+Cara baca:
+1. Negara dengan avionik tertua = peluang pasar modernisasi.
+2. Negara dengan avionik termuda = pasar lebih sulit ditembus, tapi bisa menawarkan teknologi canggih.
+Strategi:
+1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
+2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
+''')
 
 
 

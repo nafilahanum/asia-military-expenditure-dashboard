@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import plotly.graph_objects as go
-
 
 # =========================
 # PAGE CONFIG
@@ -21,8 +19,7 @@ st.caption("SIPRI & World Bank | Constant 2023 USD")
 # =========================
 @st.cache_data
 def load_data():
-    return pd.read_csv("df_asia_final.csv") 
-#python -m streamlit run app.py
+    return pd.read_csv("df_asia_final.csv")
 
 df = load_data()
 
@@ -31,8 +28,8 @@ df = load_data()
 # =========================
 st.sidebar.header("🎛️ Filter Data")
 
-years = sorted(df['Year'].unique())
-countries = sorted(df['Country_clean'].unique())
+years = sorted(df["Year"].unique())
+countries = sorted(df["Country_clean"].unique())
 
 year_range = st.sidebar.slider(
     "Rentang Tahun",
@@ -48,38 +45,25 @@ selected_countries = st.sidebar.multiselect(
 )
 
 # =========================
-# APPLY FILTER (LOGIC FIX)
+# APPLY FILTER
 # =========================
 df_filtered = df[
-    (df['Year'] >= year_range[0]) &
-    (df['Year'] <= year_range[1])
+    (df["Year"] >= year_range[0]) &
+    (df["Year"] <= year_range[1])
 ]
 
-# Jika user memilih negara → filter
 if selected_countries:
-    df_filtered = df_filtered[df_filtered['Country_clean'].isin(selected_countries)]
+    df_filtered = df_filtered[df_filtered["Country_clean"].isin(selected_countries)]
 
 # =========================
 # KPI METRICS
 # =========================
 col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("Jumlah Negara", df_filtered['Country_clean'].nunique())
-
-col2.metric(
-    "Total Belanja Militer",
-    f"${df_filtered['Military_Expenditure_USD'].sum():,.0f}"
-)
-
-col3.metric(
-    "Rata-rata Growth YoY",
-    f"{df_filtered['Military_Expenditure_YoY'].mean():.2f}%"
-)
-
-col4.metric(
-    "Rata-rata Political Stability",
-    f"{df_filtered['Political_Stability_Index'].mean():.2f}"
-)
+col1.metric("Jumlah Negara", df_filtered["Country_clean"].nunique())
+col2.metric("Total Belanja Militer", f"${df_filtered['Military_Expenditure_USD'].sum():,.0f}")
+col3.metric("Rata-rata Growth YoY", f"{df_filtered['Military_Expenditure_YoY'].mean():.2f}%")
+col4.metric("Rata-rata Political Stability", f"{df_filtered['Political_Stability_Index'].mean():.2f}")
 
 st.divider()
 
@@ -99,11 +83,12 @@ fig_exp = px.line(
 
 fig_exp.update_layout(height=500)
 st.plotly_chart(fig_exp, use_container_width=True)
-st.caption('''Visualisasi ini menekankan pola pertumbuhan jangka panjang belanja militer tiap negara. 
-Garis yang meningkat secara stabil dari waktu ke waktu menunjukkan adanya komitmen modernisasi pertahanan yang berkelanjutan dan terencana. 
-Bagi pemasaran produk avionik, pola ini merupakan sinyal positif karena avionik membutuhkan siklus pengadaan, sertifikasi, dan pemeliharaan jangka panjang. 
-Sebaliknya, lonjakan belanja yang terjadi secara tiba-tiba cenderung mencerminkan kebutuhan reaktif atau proyek satu kali, 
-sehingga kurang ideal sebagai target pasar strategis jangka panjang.''')
+
+st.caption(
+    "Pola pertumbuhan belanja militer yang stabil mencerminkan komitmen modernisasi pertahanan jangka panjang. "
+    "Bagi pemasaran produk avionik, tren seperti ini lebih bernilai dibanding lonjakan belanja sesaat "
+    "karena avionik membutuhkan siklus pengadaan dan pemeliharaan berkelanjutan."
+)
 
 # =========================
 # 2️⃣ LINE — YoY GROWTH
@@ -120,11 +105,11 @@ fig_yoy = px.line(
 
 fig_yoy.update_layout(height=500)
 st.plotly_chart(fig_yoy, use_container_width=True)
-st.caption('''Visualisasi pertumbuhan tahunan (Year-on-Year) menilai stabilitas dan kematangan proses pengadaan pertahanan. 
-Tingkat pertumbuhan yang moderat dan konsisten mencerminkan perencanaan anggaran yang sehat dan dapat diprediksi, 
-kondisi yang mendukung pemasaran produk avionik yang berbasis kontrak jangka panjang dan layanan purna jual. 
-Sebaliknya, fluktuasi YoY yang ekstrem menunjukkan pola belanja yang sangat dipengaruhi oleh faktor situasional, 
-sehingga meningkatkan risiko ketidakpastian permintaan di masa depan.''')
+
+st.caption(
+    "Pertumbuhan YoY yang moderat dan konsisten menunjukkan sistem pengadaan yang matang dan dapat diprediksi. "
+    "Sebaliknya, fluktuasi ekstrem menandakan ketergantungan pada faktor situasional yang meningkatkan risiko pasar."
+)
 
 # =========================
 # 3️⃣ SCATTER — BUDGET vs GROWTH
@@ -138,7 +123,7 @@ fig_scatter = px.scatter(
     size="Military_Expenditure_USD",
     color="Country_clean",
     hover_name="Country_clean",
-    log_x=True,   # 🔑 INI KUNCI UTAMA
+    log_x=True,
     labels={
         "Military_Expenditure_USD": "Military Expenditure (USD, log scale)",
         "Military_Expenditure_YoY": "Growth YoY (%)"
@@ -150,18 +135,18 @@ fig_scatter.update_traces(
         sizemode="area",
         sizeref=df_filtered["Military_Expenditure_USD"].max() / 40**2,
         sizemin=6,
-        opacity=0.65,        # 🔑 bubble transparan
+        opacity=0.65,
         line=dict(width=0.5, color="black")
     )
 )
 
 fig_scatter.update_layout(height=600)
 st.plotly_chart(fig_scatter, use_container_width=True)
-st.caption('''Visualisasi pertumbuhan tahunan menilai stabilitas dinamika belanja pertahanan. 
-Pertumbuhan YoY yang moderat dan konsisten menunjukkan sistem pengadaan yang relatif matang dan dapat diprediksi. 
-Kondisi ini mendukung strategi pemasaran avionik yang berorientasi pada keberlanjutan dan repeat business. 
-Sebaliknya, fluktuasi YoY yang ekstrem mengindikasikan ketergantungan pada faktor situasional seperti konflik atau perubahan kebijakan mendadak, 
-yang meningkatkan risiko ketidakpastian pasar.''')
+
+st.caption(
+    "Negara dengan belanja besar dan pertumbuhan stabil merupakan target pasar avionik yang paling strategis. "
+    "Sementara pertumbuhan ekstrem pada anggaran kecil cenderung mencerminkan proyek temporer atau kebutuhan reaktif."
+)
 
 # =========================
 # 4️⃣ RANKING — TOTAL SCORE
@@ -191,10 +176,10 @@ fig_rank.update_layout(
 )
 
 st.plotly_chart(fig_rank, use_container_width=True)
-st.plotly_chart(fig_ranking_asia, use_container_width=True)
+
 st.caption(
-    "Peringkat Total Score digunakan sebagai alat screening pasar untuk menentukan prioritas negara Asia "
-    "yang memiliki kombinasi kapasitas belanja, pertumbuhan, dan stabilitas yang relevan bagi strategi masuk pasar avionik."
+    "Total Score berfungsi sebagai alat screening pasar untuk mengidentifikasi negara dengan kombinasi "
+    "kapasitas belanja, stabilitas, dan konsistensi yang relevan bagi strategi masuk pasar avionik."
 )
 
 # =========================
@@ -217,11 +202,11 @@ fig_heatmap = px.imshow(
 
 fig_heatmap.update_layout(height=700)
 st.plotly_chart(fig_heatmap, use_container_width=True)
-st.plotly_chart(fig_heatmap_score, use_container_width=True)
+
 st.caption(
-    "Heatmap Total Score menunjukkan negara-negara Asia dengan performa belanja militer yang konsisten antarwaktu. "
-    "Pola warna yang berkelanjutan lebih relevan bagi masuknya produk avionik dibandingkan lonjakan skor sesaat, "
-    "karena mencerminkan stabilitas pasar dan potensi kontrak berulang."
+    "Heatmap menyoroti konsistensi performa belanja militer antarwaktu. "
+    "Negara dengan pola warna stabil lebih menarik bagi produk avionik "
+    "karena mencerminkan kesinambungan anggaran dan potensi kontrak berulang."
 )
 
 # =========================
@@ -229,6 +214,7 @@ st.caption(
 # =========================
 st.subheader("📋 Data Detail (Filtered)")
 st.dataframe(df_filtered, use_container_width=True)
+
 
 import streamlit as st
 import pandas as pd
@@ -671,6 +657,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

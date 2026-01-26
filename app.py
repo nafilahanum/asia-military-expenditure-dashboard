@@ -385,7 +385,12 @@ fig = px.line(
 )
 fig.update_layout(hovermode="x unified", template="plotly_white")
 st.plotly_chart(fig, use_container_width=True)
-
+st.caption('''Line chart tren transaksi per tahun menunjukkan volume transaksi avionik global.
+Cara baca:
+o	Negara atau periode dengan tren naik menandakan permintaan meningkat → pasar lebih aktif → peluang masuk lebih besar.
+o	Tren turun → kemungkinan pasar jenuh atau ada hambatan regulasi.
+Strategi: fokus negara dengan pertumbuhan transaksi positif, terutama jika didukung oleh modernisasi angkatan udara.
+''')
 # =========================
 # TREND NILAI SIPRI TIV INTERAKTIF
 # =========================
@@ -582,6 +587,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

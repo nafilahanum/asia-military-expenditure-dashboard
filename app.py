@@ -433,7 +433,6 @@ fig = px.line(
     x="year_of_order",
     y="transactions",
     markers=True,
-    title="Trend Transaksi Avionik",
     labels={"year_of_order": "Tahun", "transactions": "Jumlah Transaksi"}
 )
 fig.update_layout(hovermode="x unified", template="plotly_white")
@@ -743,6 +742,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

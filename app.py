@@ -508,7 +508,7 @@ age_by_weapon = (
     .reset_index()
 )
 
-st.subheader("🕒 Jenis Avionik dengan Usia Operasional Termuda")
+st.subheader("🕒 Jenis Avionik dengan Usia Operasional")
 
 # Plotly bar untuk usia
 fig = px.bar(
@@ -586,7 +586,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("**Avionik Termuda (Modern Fleet)**")
     fig = px.bar(
-        age_by_country.head(10),
+        age_by_country,
         x="weapon_age",
         y="recipient",
         orientation="h"
@@ -596,7 +596,7 @@ with col1:
 with col2:
     st.markdown("**Avionik Tertua (Upgrade Market)**")
     fig = px.bar(
-        age_by_country.tail(10),
+        age_by_country,
         x="weapon_age",
         y="recipient",
         orientation="h"
@@ -608,6 +608,7 @@ st.caption(
     "Insight: Negara dengan rata-rata usia avionik tinggi "
     "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
 )
+
 
 
 

@@ -365,6 +365,27 @@ if selected_recipient:
     ]
 
 # =========================
+# FILTER UNTUK TOP 10 WEAPONS
+# =========================
+selected_year_top10 = st.selectbox(
+    "Pilih Tahun (Top 10 Senjata)",
+    options=sorted(df["year_of_order"].dropna().unique()),
+    index=len(df["year_of_order"].dropna().unique())-1,
+    key="year_top10"
+)
+
+selected_country_top10 = st.selectbox(
+    "Pilih Negara Penerima (Top 10 Senjata)",
+    options=np.append(["Semua"], sorted(df["recipient"].dropna().unique())),
+    key="country_top10"
+)
+
+# Buat filtered_weapons
+filtered_weapons = df[df["year_of_order"] == selected_year_top10]
+if selected_country_top10 != "Semua":
+    filtered_weapons = filtered_weapons[filtered_weapons["recipient"] == selected_country_top10]
+
+# =========================
 # METRICS
 # =========================
 st.subheader("📌 Ringkasan Utama")
@@ -624,6 +645,7 @@ st.caption(
     "Insight: Negara dengan rata-rata usia avionik tinggi "
     "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
 )
+
 
 
 

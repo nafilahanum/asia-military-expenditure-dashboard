@@ -410,6 +410,34 @@ fig.update_layout(hovermode="x unified")
 st.plotly_chart(fig, use_container_width=True)
 
 # =========================
+# TREND NILAI SIPRI TIV
+# =========================
+st.subheader("💰 Total Nilai SIPRI TIV Avionik per Tahun")
+
+# Hitung total TIV per tahun dari filtered_df
+tiv_yearly = (
+    filtered_df
+    .groupby("year_of_order")["sipri_tiv_of_delivered_weapons"]
+    .sum()
+    .reset_index()
+)
+
+# Plot seaborn
+plt.figure(figsize=(10,5))
+sns.lineplot(
+    data=tiv_yearly,
+    x="year_of_order",
+    y="sipri_tiv_of_delivered_weapons",
+    marker="o"
+)
+plt.title("Total Nilai SIPRI TIV Avionik per Tahun")
+plt.xlabel("Tahun")
+plt.ylabel("Total TIV (USD, konstan)")
+plt.grid(True)
+st.pyplot(plt.gcf())  # tampilkan di Streamlit
+plt.clf()  # clear figure agar plot selanjutnya tidak bercampur
+
+# =========================
 # TOP IMPORTER & SUPPLIER
 # =========================
 col1, col2 = st.columns(2)
@@ -588,6 +616,7 @@ with col2:
     )
     fig2.update_layout(yaxis=dict(categoryorder="total ascending"))
     st.plotly_chart(fig2, use_container_width=True)
+
 
 
 

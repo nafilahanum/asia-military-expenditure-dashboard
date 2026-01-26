@@ -500,6 +500,17 @@ st.plotly_chart(fig, use_container_width=True)
 # =========================
 # USIA PER JENIS AVIONIK
 # =========================
+# Hitung rata-rata usia per jenis avionik
+age_by_weapon = (
+    filtered_df.groupby("weapon_description")["weapon_age"]
+    .mean()
+    .sort_values()
+    .reset_index()
+)
+
+# Ambil top 10 termuda
+age_by_weapon_top10 = age_by_weapon.head(10)
+
 st.subheader("🕒 Jenis Avionik dengan Usia Operasional Termuda")
 age_by_weapon_top10 = age_by_weapon.head(10)  # pastikan df sudah ada
 
@@ -645,6 +656,7 @@ st.caption(
     "Insight: Negara dengan rata-rata usia avionik tinggi "
     "menunjukkan potensi pasar modernisasi, retrofit, dan upgrade sistem avionik."
 )
+
 
 
 

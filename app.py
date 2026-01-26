@@ -522,7 +522,7 @@ Strategi: target negara top importir, tetapi perhatikan peluang jika mereka masi
 # =========================
 # SEMUA JENIS SENJATA AVIONIK
 # =========================
-st.subheader("💥 Semua Jenis Senjata Avionik")
+st.subheader("💥 Jenis Senjata Avionik yang Diperdagangkan")
 
 weapons_all = (
     filtered_df["weapon_description"]
@@ -537,7 +537,6 @@ fig = px.bar(
     x="transactions",
     y="weapon_description",
     orientation="h",
-    title="Semua Jenis Senjata Avionik yang Diperdagangkan",
     labels={"transactions": "Jumlah Transaksi", "weapon_description": "Jenis Avionik"}
 )
 fig.update_layout(yaxis=dict(categoryorder="total ascending"))
@@ -739,6 +738,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 

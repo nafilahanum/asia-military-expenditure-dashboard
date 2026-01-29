@@ -24,6 +24,54 @@ def load_data():
 df = load_data()
 
 # =========================
+# ✈️ ESTIMASI MRO MARKET
+# =========================
+
+# Pastikan numeric
+df["Military_Expenditure_USD"] = pd.to_numeric(df["Military_Expenditure_USD"], errors="coerce")
+
+BASE_MRO_RATIO = 0.20  # Rasio rata-rata global MRO terhadap belanja militer
+
+# ---------- Faktor Usia Alat ----------
+def age_factor(age):
+    if age < 10:
+        return 0.9
+    elif 10 <= age <= 20:
+        return 1.0
+    else:
+        return 1.3
+
+# ---------- Faktor Konflik ----------
+def conflict_factor(level):
+    mapping = {
+        "Low": 0.9,
+        "Medium": 1.0,
+        "High": 1.2
+    }
+    return mapping.get(level, 1.0)
+
+# Jika kolom usia alat tersedia
+if "Avg_Equipment_Age" in df.columns:
+    df["Avg_Equipment_Age"] = pd.to_numeric(df["Avg_Equipment_Age"], errors="coerce").fillna(15)
+    df["Age_Factor"] = df["Avg_Equipment_Age"].apply(age_factor)
+else:
+    df["Age_Factor"] = 1.0
+
+# Jika kolom konflik tersedia
+if "Conflict_Level" in df.columns:
+    df["Conflict_Factor"] = df["Conflict_Level"].apply(conflict_factor)
+else:
+    df["Conflict_Factor"] = 1.0
+
+# Hitung estimasi MRO
+df["Estimated_MRO_USD"] = (
+    df["Military_Expenditure_USD"]
+    * BASE_MRO_RATIO
+    * df["Age_Factor"]
+    * df["Conflict_Factor"]
+)
+
+# =========================
 # SIDEBAR FILTER
 # =========================
 st.sidebar.header("🎛️ Filter Data")
@@ -58,12 +106,13 @@ if selected_countries:
 # =========================
 # KPI METRICS
 # =========================
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 
 col1.metric("Jumlah Negara", df_filtered["Country_clean"].nunique())
 col2.metric("Total Belanja Militer", f"${df_filtered['Military_Expenditure_USD'].sum():,.0f}")
-col3.metric("Rata-rata Growth YoY", f"{df_filtered['Military_Expenditure_YoY'].mean():.2f}%")
-col4.metric("Rata-rata Political Stability", f"{df_filtered['Political_Stability_Index'].mean():.2f}")
+col3.metric("Estimasi Total MRO", f"${df_filtered['Estimated_MRO_USD'].sum():,.0f}")
+col4.metric("Rata-rata Growth YoY", f"{df_filtered['Military_Expenditure_YoY'].mean():.2f}%")
+col5.metric("Rata-rata Political Stability", f"{df_filtered['Political_Stability_Index'].mean():.2f}")
 
 st.divider()
 
@@ -108,6 +157,38 @@ st.caption(
     "tanpa bergantung pada urutan alfabet."
 )
 
+# =========================
+# ✈️ LINE — ESTIMATED MRO
+# =========================
+st.subheader("🛠️ Tren Estimasi MRO Market")
+
+latest_year = df_filtered["Year"].max()
+
+legend_order_mro = (
+    df_filtered[df_filtered["Year"] == latest_year]
+    .sort_values("Estimated_MRO_USD", ascending=False)
+    ["Country_clean"]
+    .tolist()
+)
+
+fig_mro = px.line(
+    df_filtered,
+    x="Year",
+    y="Estimated_MRO_USD",
+    color="Country_clean",
+    markers=True,
+    labels={"Estimated_MRO_USD": "Estimated MRO (USD)"},
+    category_orders={"Country_clean": legend_order_mro}
+)
+
+fig_mro.update_layout(height=500)
+st.plotly_chart(fig_mro, use_container_width=True)
+
+st.caption(
+    "Estimasi MRO mencerminkan potensi pasar maintenance, repair, dan overhaul. "
+    "Negara dengan MRO tinggi menunjukkan peluang kontrak sustainment jangka panjang, "
+    "yang seringkali lebih stabil dibanding pengadaan alutsista baru."
+)
 
 # =========================
 # URUTKAN LEGEND BERDASARKAN RATA-RATA YoY
@@ -222,6 +303,42 @@ st.plotly_chart(fig_rank, use_container_width=True)
 st.caption(
     "Total Score berfungsi sebagai alat screening pasar untuk mengidentifikasi negara dengan kombinasi "
     "kapasitas belanja, stabilitas, dan konsistensi yang relevan bagi strategi masuk pasar avionik."
+)
+
+# =========================
+# 🛠️ RANKING — MRO MARKET
+# =========================
+st.subheader("🔧 Ranking Negara Berdasarkan Potensi MRO")
+
+mro_ranking = (
+    df_filtered
+    .groupby("Country_clean")["Estimated_MRO_USD"]
+    .mean()
+    .sort_values(ascending=False)
+    .reset_index()
+)
+
+fig_mro_rank = px.bar(
+    mro_ranking,
+    x="Estimated_MRO_USD",
+    y="Country_clean",
+    orientation="h",
+    color="Estimated_MRO_USD",
+    color_continuous_scale="Oranges",
+    labels={"Estimated_MRO_USD": "Rata-rata Estimasi MRO (USD)"}
+)
+
+fig_mro_rank.update_layout(
+    height=700,
+    yaxis=dict(categoryorder="total ascending")
+)
+
+st.plotly_chart(fig_mro_rank, use_container_width=True)
+
+st.caption(
+    "Ranking ini menyoroti negara dengan potensi pasar sustainment terbesar. "
+    "Berbeda dengan pembelian alutsista baru, pasar MRO cenderung berulang, "
+    "lebih stabil, dan membuka peluang kemitraan jangka panjang."
 )
 
 # =========================
@@ -738,6 +855,7 @@ Strategi:
 1. Masuk pasar upgrade/retrofit untuk negara dengan alat lama.
 2. Masuk pasar high-end untuk negara dengan armada modern (diferensiasi & fitur premium).
 ''')
+
 
 
 
